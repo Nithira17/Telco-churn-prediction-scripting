@@ -36,12 +36,50 @@ columns:
   binning: ["tenure"]
   
 missing_value:
-  strategy: "drop"
+  strategy: "replace"
+  replace_columns: ["TotalCharges"]
 
 feature_engineering:
   comm_type_columns: ["PhoneService", "InternetService"]
   no_service_columns: ["MultipleLines", "OnlineSecurity", "OnlineBackup", "DeviceProtection", "TechSupport", "StreamingTV", "StreamingMovies"]
   internet_services: ["OnlineSecurity", "OnlineBackup","DeviceProtection", "TechSupport", "StreamingTV", "StreamingMovies"]
+
+
+outlier_detection:
+  detection_method: "iqr"
+  handling_method: "remove"
+
+feature_binning:
+  tenure_bins:
+    New: [0, 6]
+    Early: [6, 12]
+    Established: [12, 24]
+    Mature: [24, 36]
+    Long Term: [36, 60]
+    Veteran: [60]
+  tenure_mapping:
+    New: 0
+    Early: 1
+    Established: 2
+    Mature: 3
+    Long Term: 4
+    Veteran: 5
+
+feature_encoding:
+  nominal_features: ["gender", "InternetService", "Contract", "PaymentMethod"]
+  ordinal_mappings:
+    tenureBins:
+      New: 0
+      Early: 1
+      Established: 2
+      Mature: 3
+      Long Term: 4
+      Veteran: 5
+    comm_type_bins:
+      No Service: 0
+      Phone Only: 1
+      Internet Only: 2
+      Phone and Internet: 3
   binary_features:
     - "Partner"
     - "Dependents"
@@ -55,42 +93,6 @@ feature_engineering:
     - "StreamingMovies"
     - "PaperlessBilling"
     - "Churn"
-
-outlier_detection:
-  detection_method: "iqr"
-  handling_method: "remove"
-
-feature_binning:
-  tenure_bins:
-    New: [0, 6]
-    Early: [6, 12]
-    Established: [12, 24]
-    Mature: [24, 36]
-    Long Term: [36, 60]
-    Veteran: [60, 200]
-  tenure_mapping:
-    New: 0
-    Early: 1
-    Established: 2
-    Mature: 3
-    Long Term: 4
-    Veteran: 5
-
-feature_encoding:
-  nominal_features: ["gender", "InternetService", "Contract", "PaymentMethod"]
-  ordinal_mappings:
-    tenure_bins:
-      New: 0
-      Early: 1
-      Established: 2
-      Mature: 3
-      Long Term: 4
-      Veteran: 5
-    comm_type_bins:
-      No Service: 0
-      Phone Only: 1
-      Internet Only: 2
-      Phone and Internet: 3
 
 feature_scaling:
   scaling_type: "powerTransformer"
