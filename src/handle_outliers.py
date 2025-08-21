@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO, format=
 
 class OutlierDetectionStrategy(ABC):
     @abstractmethod
-    def detect_outliers(self, df: pd.Dataframe, columns: list) -> pd.DataFrame:
+    def detect_outliers(self, df: pd.DataFrame, columns: list) -> pd.DataFrame:
         pass
 
 class IQROutlierDetector(OutlierDetectionStrategy):
@@ -52,8 +52,6 @@ class OutlierDetector:
     def handle_outliers(self, df, selected_columns, method='remove'):
         outliers = self.detect_outliers(df, selected_columns)
         outlier_count = outliers.sum(axis=1)
-        logging.info(f'{outlier_count} number of outliers detected')
         rows_to_remove = outlier_count >= 2
-        logging.info(f'{rows_to_remove} are removed')
         return df[~rows_to_remove]
             

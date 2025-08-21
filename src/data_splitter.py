@@ -22,7 +22,7 @@ class SimpleTrainTestSplitStrategy(DataSplittingStrategy):
 
     def split(self, df, target_column):
         Y = df[target_column]
-        X = df.drop[target_column]
+        X = df.drop(columns=target_column)
 
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=self.test_size)
         return X_train, X_test, Y_train, Y_test

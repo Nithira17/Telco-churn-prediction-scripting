@@ -75,7 +75,7 @@ feature_encoding:
       Mature: 3
       Long Term: 4
       Veteran: 5
-    comm_type_bins:
+    CommunicationType:
       No Service: 0
       Phone Only: 1
       Internet Only: 2
@@ -106,6 +106,7 @@ data_splitting:
 
 handle_imbalance:
   method: "smote"
+  random_state: 42
 
 logging:
   level: "INFO"

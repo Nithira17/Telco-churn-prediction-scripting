@@ -29,13 +29,13 @@ class BinaryFeatureEncodingStrategy(FeatureEncodingStrategy):
 class NominalEncodingStrategy(FeatureEncodingStrategy):
     def __init__(self, nominal_columns):
         self.nominal_columns = nominal_columns
-        self.encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
+        self.encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
         os.makedirs('artifacts/encode', exist_ok=True)
 
     def encode(self, df):
         encoded_array = self.encoder.fit_transform(df[self.nominal_columns])
         encoded_feature_names = self.encoder.get_feature_names_out(self.nominal_columns)
-        encoded_df = pd.Dataframe(encoded_array, columns=encoded_feature_names, index=df.index)
+        encoded_df = pd.DataFrame(encoded_array, columns=encoded_feature_names, index=df.index)
 
         encoder_path = os.path.join('artifacts/encode', 'onehot_encoder.json')
         with open(encoder_path, 'w') as f:

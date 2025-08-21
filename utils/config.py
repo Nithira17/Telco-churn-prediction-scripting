@@ -27,7 +27,7 @@ def get_columns():
 
 def get_missing_values_config():
     config = load_config()
-    return config.get('missing_values', {})
+    return config.get('missing_value', {})
 
 def get_feature_engineering_config():
     config = load_config()
